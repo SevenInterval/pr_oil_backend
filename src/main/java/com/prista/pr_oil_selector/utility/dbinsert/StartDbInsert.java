@@ -47,7 +47,7 @@ public class StartDbInsert {
 
             String modelId = generateRandomId();
             String modelName = category1Names[i] + "_model_";
-            Model model = new Model(null, modelName + "1", 2011, 2013, brandId, category1Names[i], modelId);
+            Model model = new Model(null, modelName + "1", brandId, category1Names[i], modelId);
             modelList.add(model);
 
             String vehicleId = generateRandomId();
@@ -111,7 +111,7 @@ public class StartDbInsert {
             vehicleList.add(vehicle2);
 
             modelId = generateRandomId();
-            Model model2 = new Model(null, modelName + "2", 2011, 2013, brandId, category1Names[i], modelId);
+            Model model2 = new Model(null, modelName + "2", brandId, category1Names[i], modelId);
             modelList.add(model2);
 
             vehicleId = generateRandomId();
@@ -123,7 +123,7 @@ public class StartDbInsert {
             vehicleList.add(vehicle4);
 
             modelId = generateRandomId();
-            Model model3 = new Model(null, modelName + "3", 2011, 2013, brandId, category1Names[i], modelId);
+            Model model3 = new Model(null, modelName + "3", brandId, category1Names[i], modelId);
             modelList.add(model3);
 
             vehicleId = generateRandomId();

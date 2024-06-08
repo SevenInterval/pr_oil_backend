@@ -25,7 +25,7 @@ public class ModelServiceImpl implements IModelService {
         }
         List<ModelDto> modelDtoList = new ArrayList<>();
         for (Model model : modelList) {
-            ModelDto modelDto = new ModelDto(model.getModelId(), model.getModel(), model.getYearFrom(), model.getYearTo());
+            ModelDto modelDto = new ModelDto(model.getModelId(), model.getModel());
             modelDtoList.add(modelDto);
         }
         return modelDtoList;

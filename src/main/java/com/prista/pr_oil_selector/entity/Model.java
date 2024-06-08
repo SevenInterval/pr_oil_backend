@@ -20,12 +20,6 @@ public class Model {
     @Column(name = "MODEL")
     private String model;
 
-    @Column(name = "YEAR_FROM")
-    private int yearFrom;
-
-    @Column(name = "YEAR_TO")
-    private int yearTo;
-
     @Column(name = "BRAND_ID")
     private String brandId;
 

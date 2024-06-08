@@ -10,6 +10,4 @@ import lombok.Setter;
 public class ModelDto {
     String modelId;
     String model;
-    int yearFrom;
-    int yearTo;
 }
