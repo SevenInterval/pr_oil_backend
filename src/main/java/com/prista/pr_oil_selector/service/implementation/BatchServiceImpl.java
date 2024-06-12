@@ -1,11 +1,13 @@
 package com.prista.pr_oil_selector.service.implementation;
 
 import com.prista.pr_oil_selector.entity.*;
+import com.prista.pr_oil_selector.repository.*;
 import com.prista.pr_oil_selector.service.IBatchService;
 import com.prista.pr_oil_selector.utility.enums.RecommendationType;
 import com.prista.pr_oil_selector.utility.exception.GlobalException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,6 +23,17 @@ public class BatchServiceImpl implements IBatchService {
     String componentId;
     String componentCode;
     String productId;
+
+    @Autowired
+    IBrandRepository brandRepository;
+    @Autowired
+    IModelRepository modelRepository;
+    @Autowired
+    IVehicleRepository vehicleRepository;
+    @Autowired
+    IComponentRepository componentRepository;
+    @Autowired
+    IProductRepository productRepository;
 
     @Override
     public void createDatabaseAndContents(int sheetValue) throws GlobalException {
@@ -39,7 +52,6 @@ public class BatchServiceImpl implements IBatchService {
 
     void createData(FileInputStream fileInputStream, Workbook workbook, int index) {
         Sheet sheet = workbook.getSheetAt(index);
-        List<Map<String, Object>> dataList = new ArrayList<>();
         Row headerRow = sheet.getRow(0);
         List<String> headers = new ArrayList<>();
 
@@ -65,7 +77,7 @@ public class BatchServiceImpl implements IBatchService {
                 //j = 1 Make - Brand
                 if (j == 1) {
                     String brandValue = getCellValue(cell);
-                    if (brandValue != null && !brandList.contains(brandValue)) {
+                    if (brandValue != null && !brandValue.isBlank() && !brandValue.isEmpty() && !brandList.contains(brandValue)) {
                         brandList.add(brandValue);
                         brandId = generateRandomId();
                         Brand brand = new Brand(null, brandValue, index + 1, brandId);
@@ -75,7 +87,7 @@ public class BatchServiceImpl implements IBatchService {
                 // j=2 Model
                 else if (j == 2) {
                     String modelValue = getCellValue(cell);
-                    if (modelValue != null && !modelList.contains(modelValue)) {
+                    if (modelValue != null && !modelValue.isBlank() && !modelValue.isEmpty() && !modelList.contains(modelValue)) {
                         modelList.add(modelValue);
                         modelId = generateRandomId();
                         Model model = new Model(null, modelValue, brandId, modelId);
@@ -85,11 +97,11 @@ public class BatchServiceImpl implements IBatchService {
                 // j=3 Vehicle - Type
                 else if (j == 3) {
                     String vehicleValue = getCellValue(cell);
-                    if (vehicleValue != null && !vehicleList.contains(vehicleValue)) {
+                    if (vehicleValue != null && !vehicleValue.isBlank() && !vehicleValue.isEmpty() && !vehicleList.contains(vehicleValue)) {
                         vehicleList.add(vehicleValue);
                         vehicleId = generateRandomId();
-                        int yearFrom = Integer.parseInt(getCellValue(row.getCell(4))); // J=4 YEAR FROM
-                        int yearTo = Integer.parseInt(getCellValue(row.getCell(5))); // J=5 YEAR TO
+                        int yearFrom = getCellValue(row.getCell(4)) != null ? Integer.parseInt(getCellValue(row.getCell(4)).substring(0,4)) : 0; // J=4 YEAR FROM
+                        int yearTo = getCellValue(row.getCell(5)) != null ? Integer.parseInt(getCellValue(row.getCell(5)).substring(0,4)) : 0; // J=5 YEAR TO
                         Vehicle vehicle = new Vehicle(null, vehicleValue, yearFrom, yearTo, modelId, vehicleId);
                         vehicleDbList.add(vehicle);
 
@@ -99,7 +111,7 @@ public class BatchServiceImpl implements IBatchService {
                 // J=6 Component 1
                 else if (j == 6) {
                     String componentValue = getCellValue(cell);
-                    if (componentValue != null) {
+                    if (componentValue != null && !componentValue.isBlank() && !componentValue.isEmpty()) {
                         componentId = generateRandomId();
                         componentCode = generateRandomComponentCode();
                         String componentVolumes = getCellValue(row.getCell(8)); // j= 8 Component 1 Volumes
@@ -111,7 +123,7 @@ public class BatchServiceImpl implements IBatchService {
                 // J=9 Product 1 Recommended
                 else if (j == 9) {
                     String productValue = getCellValue(cell);
-                    if(productValue != null) {
+                    if(productValue != null && !productValue.isBlank() && !productValue.isEmpty()) {
                         productId = generateRandomId();
                         String serviceInternals = getCellValue(row.getCell(12)); // j= 12 serviceInternal 1
                         Product product = new Product(null, productValue, serviceInternals, RecommendationType.RECOMMEND.name(), productId, componentId, vehicleId);
@@ -121,7 +133,7 @@ public class BatchServiceImpl implements IBatchService {
                 // J=11 Alternate 1 Recommended
                 else if (j == 11) {
                     String productValue = getCellValue(cell);
-                    if(productValue != null) {
+                    if(productValue != null && !productValue.isBlank() && !productValue.isEmpty()) {
                         productId = generateRandomId();
                         String serviceInternals = getCellValue(row.getCell(12)); // j= 12 serviceInternal 1
                         Product product = new Product(null, productValue, serviceInternals, RecommendationType.ALTERNATE.name(), productId, componentId, vehicleId);
@@ -130,8 +142,12 @@ public class BatchServiceImpl implements IBatchService {
                 }
 
             }
-            dataList.add(data);
         }
+        brandRepository.saveAll(brandDbList);
+        modelRepository.saveAll(modelDbList);
+        vehicleRepository.saveAll(vehicleDbList);
+        componentRepository.saveAll(componentDbList);
+        productRepository.saveAll(productDbList);
     }
 
     private String getCellValue(Cell cell) {

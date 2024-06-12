@@ -27,12 +27,11 @@ public class BatchController {
     public ResponseEntity<BaseResponse> createDatabaseAndContents(@PathVariable(value="specialKey") String specialKey, @PathVariable(value="sheetValue") int sheetValue) {
         try {
             if(specialKey.equals("prista_941612_ridvan")) {
-
+                batchService.createDatabaseAndContents(sheetValue);
+                return new ResponseEntity<>(new BaseResponse(ResponseStatusType.SUCCESS, "Başarılı"), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new BaseResponse(ResponseStatusType.FAIL, "Hata!"), HttpStatus.BAD_REQUEST);
             }
-            batchService.createDatabaseAndContents(sheetValue);
-            return new ResponseEntity<>(new BaseResponse(ResponseStatusType.SUCCESS, "Başarılı"), HttpStatus.OK);
         } catch (GlobalException e) {
             return new ResponseEntity<>(new BaseResponse(ResponseStatusType.FAIL, e.getErrorMessage()), HttpStatus.BAD_REQUEST);
         } catch (IllegalArgumentException e) {
