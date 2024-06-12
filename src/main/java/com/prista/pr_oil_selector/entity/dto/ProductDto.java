@@ -12,7 +12,5 @@ import lombok.Setter;
 public class ProductDto {
     String productId;
     String name;
-    String description;
     String[] serviceInternals;
-    String url;
 }

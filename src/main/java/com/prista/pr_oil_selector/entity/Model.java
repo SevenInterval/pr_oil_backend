@@ -23,9 +23,6 @@ public class Model {
     @Column(name = "BRAND_ID")
     private String brandId;
 
-    @Column(name = "BRAND_NAME")
-    private String brandName;
-
     @Column(name = "MODEL_ID")
     private String modelId;
 }

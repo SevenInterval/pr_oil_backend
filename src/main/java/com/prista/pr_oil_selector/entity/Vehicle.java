@@ -26,17 +26,8 @@ public class Vehicle {
     @Column(name = "YEAR_TO")
     private int yearTo;
 
-    @Column(name = "BRAND_ID")
-    private String brandId;
-
-    @Column(name = "BRAND_NAME")
-    private String brandName;
-
     @Column(name = "MODEL_ID")
     private String modelId;
-
-    @Column(name = "MODEL_NAME")
-    private String modelName;
 
     @Column(name = "VEHICLE_ID")
     private String vehicleId;

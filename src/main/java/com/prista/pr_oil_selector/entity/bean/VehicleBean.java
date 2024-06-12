@@ -9,8 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class VehicleBean {
     String vehicleId;
-    String brand;
-    String model;
     String type;
     int yearFrom;
     int yearTo;

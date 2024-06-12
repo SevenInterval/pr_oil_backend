@@ -28,9 +28,6 @@ public class StartDbInsert {
     @Autowired
     IProductRepository productRepository;
 
-    @Autowired
-    IComponentProductRepository componentProductRepository;
-
     @PostConstruct
     public void init() {
         List<Brand> brandList = new ArrayList<>();
@@ -38,7 +35,6 @@ public class StartDbInsert {
         List<Vehicle> vehicleList = new ArrayList<>();
         List<com.prista.pr_oil_selector.entity.Component> componentList = new ArrayList<>();
         List<Product> productList = new ArrayList<>();
-        List<ComponentProduct> componentProductList = new ArrayList<>();
         String[] category1Names = {"Aston Martin", "Audi", "BMW"};
         for (int i = 0; i < category1Names.length; i++) {
             String brandId = generateRandomId();
@@ -47,12 +43,12 @@ public class StartDbInsert {
 
             String modelId = generateRandomId();
             String modelName = category1Names[i] + "_model_";
-            Model model = new Model(null, modelName + "1", brandId, category1Names[i], modelId);
+            Model model = new Model(null, modelName + "1", brandId, modelId);
             modelList.add(model);
 
             String vehicleId = generateRandomId();
             String vehicleName = model.getModel();
-            Vehicle vehicle1 = new Vehicle(null, vehicleName + "1", 2010, 2020, brandId, category1Names[i], modelId, modelName, vehicleId);
+            Vehicle vehicle1 = new Vehicle(null, vehicleName + "1", 2010, 2020, modelId, vehicleId);
             vehicleList.add(vehicle1);
 
             String componentId = generateRandomId();
@@ -72,65 +68,40 @@ public class StartDbInsert {
             String productId = generateRandomId();
             String productName = "Castrol TRANSMAX ATF DEXRON®-VI MERCON® LV Multivehicle";
             String serviceInternals = "Check 15000 km/ 12 months;Change 75000 km/ 60 months";
-            String productDesc = "\"Castrol Transmax ATF DEXRON®-VI MERCON® LV Multivehicle</b>, formulated with Smooth Drive Technology™, \" +\n" +
-                    "                    \"is a Full Synthetic Technology formulation designed for modern automatic transmissions.\"";
-            String productUrl = "https://castrol.com/content/dam/castrol/country-sites/en_gb/united-kingdom/home/car-engine-oils/transmax_atf_dexron_vi_mercon_lv_multivehicle.jpg";
-            Product product = new Product(null, productName, productDesc, serviceInternals, productUrl, productId);
+            Product product = new Product(null,productName, serviceInternals, "RECOMMENDED", productId, componentId2, vehicleId);
             productList.add(product);
-
-            ComponentProduct componentProduct = new ComponentProduct(null, componentId2, productId, "RECOMMENDED");
-            componentProductList.add(componentProduct);
 
             String productId2 = generateRandomId();
             String productName2 = "Castrol TRANSMAX ATF Dex/Merc Multivehicle";
             String serviceInternals2 = "Check 15000 km/ 12 months;Change 75000 km/ 60 months";
-            String productDesc2 = "\"Castrol Transmax ATF DEXRON®-VI MERCON® LV Multivehicle</b>, formulated with Smooth Drive Technology™, \" +\n" +
-                    "                    \"is a Full Synthetic Technology formulation designed for modern automatic transmissions.\"";
-            String productUrl2 = "https://castrol.com/content/dam/castrol/country-sites/en_gb/united-kingdom/home/car-engine-oils/transmax_atf_dex_merc_multivehicle.jpg";
-            Product product2 = new Product(null, productName2, productDesc2, serviceInternals2, productUrl2, productId2);
+            Product product2 = new Product(null,productName2, serviceInternals2, "RECOMMENDED", productId2, componentId2, vehicleId);
             productList.add(product2);
 
-            ComponentProduct componentProduct2 = new ComponentProduct(null, componentId2, productId2, "ALTERNATE");
-            componentProductList.add(componentProduct2);
-
-            String productId3 = generateRandomId();
-            String productName3 = "Castrol React DOT 4 Low Temp";
-            String serviceInternals3 = "Change 24 months";
-            String productDesc3 = "\"Castrol Transmax ATF DEXRON®-VI MERCON® LV Multivehicle</b>, formulated with Smooth Drive Technology™, \" +\n" +
-                    "                    \"is a Full Synthetic Technology formulation designed for modern automatic transmissions.\"";
-            String productUrl3 = "https://castrol.com/content/dam/castrol/country-sites/en_gb/united-kingdom/home/car-engine-oils/transmax_atf_dex_merc_multivehicle.jpg";
-            Product product3 = new Product(null, productName3, productDesc3, serviceInternals3, productUrl3, productId3);
-            productList.add(product3);
-
-            ComponentProduct componentProduct3 = new ComponentProduct(null, componentId2, productId3, "ALTERNATE");
-            componentProductList.add(componentProduct3);
-
-
             vehicleId = generateRandomId();
-            Vehicle vehicle2 = new Vehicle(null, vehicleName + "2", 2010, 2020, brandId, category1Names[i], modelId, modelName, vehicleId);
+            Vehicle vehicle2 = new Vehicle(null, vehicleName + "2", 2010, 2020, modelId, vehicleId);
             vehicleList.add(vehicle2);
 
             modelId = generateRandomId();
-            Model model2 = new Model(null, modelName + "2", brandId, category1Names[i], modelId);
+            Model model2 = new Model(null, modelName + "2", brandId, modelId);
             modelList.add(model2);
 
             vehicleId = generateRandomId();
             vehicleName = model2.getModel();
-            Vehicle vehicle3 = new Vehicle(null, vehicleName + "1", 2010, 2020, brandId, category1Names[i], modelId, modelName, vehicleId);
+            Vehicle vehicle3 = new Vehicle(null, vehicleName + "1", 2010, 2020, modelId, vehicleId);
             vehicleId = generateRandomId();
-            Vehicle vehicle4 = new Vehicle(null, vehicleName + "2", 2010, 2020, brandId, category1Names[i], modelId, modelName, vehicleId);
+            Vehicle vehicle4 = new Vehicle(null, vehicleName + "2", 2010, 2020, modelId, vehicleId);
             vehicleList.add(vehicle3);
             vehicleList.add(vehicle4);
 
             modelId = generateRandomId();
-            Model model3 = new Model(null, modelName + "3", brandId, category1Names[i], modelId);
+            Model model3 = new Model(null, modelName + "3", brandId, modelId);
             modelList.add(model3);
 
             vehicleId = generateRandomId();
             vehicleName = model3.getModel();
-            Vehicle vehicle5 = new Vehicle(null, vehicleName + "1", 2010, 2020, brandId, category1Names[i], modelId, modelName, vehicleId);
+            Vehicle vehicle5 = new Vehicle(null, vehicleName + "1", 2010, 2020, modelId, vehicleId);
             vehicleId = generateRandomId();
-            Vehicle vehicle6 = new Vehicle(null, vehicleName + "2", 2010, 2020, brandId, category1Names[i], modelId, modelName, vehicleId);
+            Vehicle vehicle6 = new Vehicle(null, vehicleName + "2", 2010, 2020, modelId, vehicleId);
             vehicleList.add(vehicle5);
             vehicleList.add(vehicle6);
         }
@@ -140,7 +111,6 @@ public class StartDbInsert {
         vehicleRepository.saveAll(vehicleList);
         componentRepository.saveAll(componentList);
         productRepository.saveAll(productList);
-        componentProductRepository.saveAll(componentProductList);
     }
 
     private String generateRandomId() {

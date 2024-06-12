@@ -20,15 +20,18 @@ public class Product {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "DESCRIPTION")
-    private String description;
-
     @Column(name = "SERVICE_INTERNALS")
     private String serviceInternals;
 
-    @Column(name = "URL")
-    private String url;
+    @Column(name = "RECOMMENDATION_TYPE")
+    private String recommendationType;
 
     @Column(name = "PRODUCT_ID")
     private String productId;
+
+    @Column(name = "COMPONENT_ID")
+    private String componentId;
+
+    @Column(name = "VEHICLE_ID")
+    private String vehicleId;
 }
